@@ -1,5 +1,5 @@
-﻿using Codeuctivity.OpenXmlPowerTools;
-using Codeuctivity.OpenXmlPowerTools.DocumentBuilder;
+using OpenXmlPowerTools;
+using OpenXmlPowerTools.DocumentBuilder;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Validation;
 using System;

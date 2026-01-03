@@ -1,6 +1,11 @@
 # OpenXmlPowerTools
 
-- Linux, Windows, and macOS support was added by this fork
+[![.NET build and test](https://github.com/opendocx/Open-Xml-PowerTools/actions/workflows/dotnet.yml/badge.svg)](https://github.com/opendocx/Open-Xml-PowerTools/actions/workflows/dotnet.yml)
+
+## Focus of this fork
+
+- Linux, Windows and MacOs support
+- DocumentAssembler, DocumentBuilder, and integrating them both (DocumentComposer)
 
 ## Example - Convert DOCX to HTML
 

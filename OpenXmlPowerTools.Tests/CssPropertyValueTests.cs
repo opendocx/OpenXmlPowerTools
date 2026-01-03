@@ -1,4 +1,4 @@
-using Codeuctivity.OpenXmlPowerTools;
+using OpenXmlPowerTools;
 using SkiaSharp;
 using Xunit;
 

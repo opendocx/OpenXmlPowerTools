@@ -1,5 +1,5 @@
 ﻿using Codeuctivity.HtmlRenderer;
-using Codeuctivity.OpenXmlPowerTools.OpenXMLWordprocessingMLToHtmlConverter;
+using OpenXmlPowerTools.OpenXMLWordprocessingMLToHtmlConverter;
 using Codeuctivity.SkiaSharpCompare;
 using DocumentFormat.OpenXml.Packaging;
 using PuppeteerSharp;

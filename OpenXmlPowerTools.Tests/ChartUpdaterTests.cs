@@ -1,5 +1,5 @@
-﻿using Codeuctivity.OpenXmlPowerTools;
-using Codeuctivity.OpenXmlPowerTools.Chart;
+using OpenXmlPowerTools;
+using OpenXmlPowerTools.Chart;
 using DocumentFormat.OpenXml.Packaging;
 using System;
 using System.IO;
