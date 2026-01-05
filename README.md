@@ -1,6 +1,6 @@
 ﻿# OpenXmlPowerTools
 
-[![.NET build and test](https://github.com/opendocx/Open-Xml-PowerTools/actions/workflows/dotnet.yml/badge.svg)](https://github.com/opendocx/Open-Xml-PowerTools/actions/workflows/dotnet.yml)
+[![.NET build and test](https://github.com/opendocx/OpenXmlPowerTools/actions/workflows/dotnet.yml/badge.svg)](https://github.com/opendocx/OpenXmlPowerTools/actions/workflows/dotnet.yml)
 
 ## Focus of this fork
 
@@ -9,10 +9,6 @@
 - DocumentComposer (this fork's primary contribution: integrates/wraps DocumentAssembler AND DocumentBuilder)
 - focus on fixing broad range of bugs as flushed out by very diverse DOCX content
 - Linux, Windows and macOS support as added by upstream (Codeuctivity)
-
-Note on naming: this repository name still uses the historical hyphenated form (Open-Xml-PowerTools), while the
-Codeuctivity fork and the .NET package/namespace use OpenXmlPowerTools. This fork is expected to drop the hyphens
-in the repo name in a future rename.
 
 See [docs/index.md](docs/index.md) for details.
 
@@ -30,6 +26,8 @@ var data = XElement.Load("path/to/data.xml");
 var result = await DocumentComposer.ComposeDocument(template, data);
 result.SaveAs("path/to/output.docx");
 ```
+
+See [docs/index.md](docs/index.md) for details.
 
 ## When to use what
 
