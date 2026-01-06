@@ -1,7 +1,5 @@
 ﻿# OpenXmlPowerTools
 
-[![.NET build and test](https://github.com/opendocx/OpenXmlPowerTools/actions/workflows/dotnet.yml/badge.svg)](https://github.com/opendocx/OpenXmlPowerTools/actions/workflows/dotnet.yml)
-
 ## Focus of this fork
 
 - DocumentAssembler (Populating content in template DOCX files with data from XML)
