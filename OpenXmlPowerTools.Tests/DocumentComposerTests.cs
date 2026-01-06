@@ -26,7 +26,7 @@ namespace OxPt
             public bool DiscardHeadersAndFootersInKeptSections { get; set; }
             public string InsertId { get; set; }
 
-            public Source ToSource(DirectoryInfo sourceDir)
+            public DocxSource ToSource(DirectoryInfo sourceDir)
             {
                 DocxSource result;
                 if (DocumentFile != null)
@@ -107,7 +107,7 @@ namespace OxPt
                 var dataFile = new FileInfo(Path.Combine(sourceDir.FullName, data));
                 xmlData = XElement.Load(dataFile.FullName);
             }
-            List<Source> sources = null;
+            List<DocxSource> sources = null;
             if (testSources != null)
             {
                 sources = testSources.Select(src => src.ToSource(sourceDir)).ToList();

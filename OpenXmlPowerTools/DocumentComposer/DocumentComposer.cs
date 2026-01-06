@@ -17,7 +17,7 @@ namespace OpenXmlPowerTools
             return await ComposeDocument(templateDoc, data, null);
         }
 
-        public static async Task<WmlDocument> ComposeDocument(WmlDocument templateDoc, XmlDocument data, List<DocumentBuilder.Source> insertSources)
+        public static async Task<WmlDocument> ComposeDocument(WmlDocument templateDoc, XmlDocument data, List<DocxSource> insertSources)
         {
             XDocument xDoc = data.GetXDocument();
             return await ComposeDocument(templateDoc, xDoc.Root, insertSources);
@@ -30,7 +30,7 @@ namespace OpenXmlPowerTools
         }
 
         // Compose document via insertion (a la Document Builder 2.0 WITH DocumentAssembler)
-        public static async Task<WmlDocument> ComposeDocument(WmlDocument templateDoc, XElement data, List<DocumentBuilder.Source> insertSources)
+        public static async Task<WmlDocument> ComposeDocument(WmlDocument templateDoc, XElement data, List<DocxSource> insertSources)
         {
             await Task.Yield();
             var sourcesProvided = insertSources != null && insertSources.Count > 0;
@@ -100,7 +100,7 @@ namespace OpenXmlPowerTools
         }
 
         // Compose document via concatenation (a la DocumentBuilder 1.0)
-        public static async Task<WmlDocument> ComposeDocument(List<DocumentBuilder.Source> sources)
+        public static async Task<WmlDocument> ComposeDocument(List<DocxSource> sources)
         {
             var errors = new List<string>();
             var tasks = sources.Select(source =>
@@ -118,7 +118,7 @@ namespace OpenXmlPowerTools
             await Task.WhenAll(tasks);
             if (errors.Count == 0)
             {
-                return DocumentBuilder.DocumentBuilder.BuildDocument(sources);
+                return DocumentBuilder.DocumentBuilder.BuildDocument(sources.Cast<DocumentBuilder.Source>().ToList());
             }
             else
             {
@@ -126,7 +126,7 @@ namespace OpenXmlPowerTools
             }
         }
 
-        private static DocumentBuilder.Source GetSourceFromInsertResult(DocumentAssembler.AssembleInsert insert, string dirName)
+        private static DocxSource GetSourceFromInsertResult(DocumentAssembler.AssembleInsert insert, string dirName)
         {
             var filename = GetFilenameFromInsertId(insert.Id, dirName, insert.Data != null);
             if (filename != null && File.Exists(filename))
