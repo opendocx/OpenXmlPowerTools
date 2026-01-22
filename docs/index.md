@@ -214,10 +214,14 @@ in addition to static DOCX sources, dynamic sources (created by process of docum
 
 Future
 ======
+  * working towards extending DocumentAssembler, DocumentBuilder, and DocumentComposer so inserted DOCX content
+    will no longer need to be at the block level, but could instead be integrated/merged into existing paragraphs
+    simply by positioning the `<Insert>` metadata inline rather than alone in its own paragraph.
+
   * planning to integrate support for **image insertion** into DocumentComposer, allowing for both static and
     potentially dynamically-generated images to be incorporated into assembled documents efficiently (i.e. without
     base64-encoding the image data and embedding them into the XML).
-  
+
   * also researching feasibility of having DocumentAssembler (optionally) translate markdown tags in incoming XML
     data into native DOCX formatting codes when inserting content into templates.
 
