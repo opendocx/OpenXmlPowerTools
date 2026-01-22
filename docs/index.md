@@ -89,7 +89,8 @@ Inserted ("child") DOCX files...
   * In this model, sources are "implicit" because no list of sources needs to be explicitly provided as
     a 3rd argument to ComposeDocument (contrast with other modes below). Insert Ids are file names
     identifying child content.
-  * If neither the parent template NOR any child files require DocumentAssembler, you may pass null for xmlData.
+  * If neither the parent template NOR any child files require additional DocumentAssembler features (besides
+    just processing the `<Insert>` metadata), you may pass null for xmlData.
 
 ### Sample template illustrating use of 2 "implicit" sources:
 
@@ -115,8 +116,8 @@ Insertion w/ "Direct" Sources
 -----------------------------------------
 In this mode of operation, a "parent" DOCX template identifies WHERE "child" DOCX content is to be inserted,
 but the actual child content is passed in (as a `DocxSource`) rather than DocumentComposer looking for it on disk.
-The `Id` attribute of the `<Insert>` element is now used as a key to look up the `DocxSource` within the list of
-sources provided when calling ComposeDocument.
+The `Id` attribute of the `<Insert>` metadata is now used as a key to look up the `DocxSource` within the list of
+sources provided to ComposeDocument.
 
 ### Sample code to invoke ComposeDocument with "direct" sources:
 
@@ -135,7 +136,7 @@ sources provided when calling ComposeDocument.
 #### Notes:
   * This model refers to sources as "direct" because
     (1) an explicit list of sources is provided in the 3rd argument to ComposeDocument, and
-    (2) any `<Insert>` elements in ParentTemplate.docx refer to those sources **directly** by insert ID.
+    (2) any `<Insert>` metadata in ParentTemplate.docx refer to those sources **directly** by insert ID.
 
 ### Sample template illustrating "direct" sources:
 
@@ -160,9 +161,9 @@ source IDs your template refers to, so you can provide the necessary sources wit
 
 Insertion w/ "Indirect" Sources
 -------------------------------------------
-In this mode of operation, the "parent" DOCX might not contain `<Insert>` elements at all, but rather,
-it contains regular `<Content>` elements (which must be at block level). These `<Content>` elements
-cause a lookup in the XML data, and that data then contains the actual Insert Id used to identify
+In this mode of operation, the "parent" DOCX might not contain `<Insert>` metadata at all, but rather,
+it contains regular `<Content>` metadata (which must be at block level). These `<Content>` metadata
+cause a lookup in the XML data, which in turn contains the _actual_ Insert Id used to identify
 a composition source.
 
 ### Sample code to invoke ComposeDocument with "indirect" sources /(same as above)/:
@@ -182,7 +183,7 @@ a composition source.
 #### Notes:
   * this code is the same as the sample above for "direct" sources
   * The access is "indirect" because in this case, the template refers not "directly" to the insert Id,
-    but rather to an intermediate value within the XML data that then points to the actual insert Id:
+    but rather to an intermediate value within the XML data, which then points to the actual insert Id:
 
 ### Sample template showing "indirect" sources:
 
