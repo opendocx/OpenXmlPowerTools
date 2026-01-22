@@ -15,7 +15,7 @@ because it is much more actively maintained.
 Terminology (quick)
 ===================
 
-- **Parent template**: the main DOCX you call `ComposeDocument` on.
+- **Parent template**: the main DOCX on which you call `ComposeDocument`.
 - **Child content**: DOCX content (document or template) that gets inserted into the parent.
 - **Insert Id**: the identifier used to resolve child content (either a filename in "implicit" mode,
   or a key into the provided sources in "direct" and "indirect" modes).
@@ -38,17 +38,17 @@ Both of these tools are great, but they work quite differently from each other. 
 
   * `DocumentBuilder` entails __using C# code__ to specify how documents should be combined.
     - Code can specify a list of DOCX files to be concatenated into a single document, OR
-    - Code can embed custom <Insert> XML elements into one DOCX file, and then provide
-      additional DOCX files that correlate with each <Insert>.
+    - Code can embed custom `<Insert>` XML elements into one DOCX file, and then provide
+      additional DOCX files that correlate with each `<Insert>`.
       (Conceptually, this is _sort of_ like a template, in that there is a "parent" DOCX that
       indicates where insertions are meant to happen, but if saved, it would be unreadable in Word.)
 
 In order to maximize backwards compatibility with both `DocumentAssembler` and `DocumentBuilder`,
 we opted to create a new `DocumentComposer` wrapper to cleanly integrate the two. This approach entailed
 some changes to `DocumentBuilder` and relatively minimal extensions to `DocumentAssembler`, which now:
-  * recognizes new DA <Insert> metadata for designating insertion points
-  * during assembly, DA <Insert> metadata is replaced with DocumentBuilder <Insert> element
-  * assembly also reports what DA <Insert>s it encountered (for use in composition)
+  * recognizes new DA `<Insert>` metadata for designating insertion points
+  * during assembly, DA `<Insert>` metadata is replaced with DocumentBuilder `<Insert>` element
+  * assembly also reports what DA `<Insert>`s it encountered (for use in composition)
   * otherwise no impact or change to its existing functionality.
 
 Existing code that relies on `DocumentAssembler` can very easily incorporate `DocumentComposer` by swapping out calls to
@@ -93,27 +93,29 @@ Inserted ("child") DOCX files...
 
 ### Sample template illustrating use of 2 "implicit" sources:
 
-In ParentTemplate.docx:
+In **ParentTemplate.docx**:
 
-    This is a parent document, \<#\<Content Select="./Name"/>#>.�
-    \<#\<Insert Id="InsertedStatic.docx"/>#>�
-    \<#\<Insert Id="InsertedTemplate.docx" Select="."/>#>�
-    This is the parent document again, \<#\<Content Select="./Name"/>#>.�
+```md
+This is a parent document, <# <Content Select="./Name"/> #>.¶
+<# <Insert Id="InsertedStatic.docx"/> #>¶
+<# <Insert Id="InsertedTemplate.docx" Select="."/> #>¶
+This is the parent document again, <# <Content Select="./Name"/> #>.¶
+```
 
 #### Template notes:
   * An "Implicit" composition source means the filename of the DOCX to insert is inferred
-    from the Insert's "Id" attribute.
+    from the `Insert`'s `Id` attribute.
   * For this to work, the indicated filename must be in the same directory as the parent template DOCX file.
-  * "InsertedStatic.docx" is assumed to be a **static** DOCX because no "Select" attribute was specified.
-  * Because a "Select" attribute is present for the second insert, "InsertedTemplate.docx" will be assembled
-    (using the data resulting from the "Select" attrib), and the resulting document inserted.
+  * "InsertedStatic.docx" is assumed to be a **static** DOCX because no `Select` attribute was specified.
+  * Because a `Select` attribute is present for the second insert, "InsertedTemplate.docx" will be assembled
+    (using the data resulting from the `Select` attrib), and the resulting document inserted.
 
 
 Insertion w/ "Direct" Sources
 -----------------------------------------
 In this mode of operation, a "parent" DOCX template identifies WHERE "child" DOCX content is to be inserted,
 but the actual child content is passed in (as a `DocxSource`) rather than DocumentComposer looking for it on disk.
-The "Id" attribute of the \<Insert> element is now used as a key to look up the `DocxSource` within the list of
+The `Id` attribute of the `<Insert>` element is now used as a key to look up the `DocxSource` within the list of
 sources provided when calling ComposeDocument.
 
 ### Sample code to invoke ComposeDocument with "direct" sources:
@@ -133,19 +135,21 @@ sources provided when calling ComposeDocument.
 #### Notes:
   * This model refers to sources as "direct" because
     (1) an explicit list of sources is provided in the 3rd argument to ComposeDocument, and
-    (2) any \<Insert> elements in ParentTemplate.docx refer to those sources **directly** by insert ID.
+    (2) any `<Insert>` elements in ParentTemplate.docx refer to those sources **directly** by insert ID.
 
 ### Sample template illustrating "direct" sources:
 
 In ParentTemplate.docx:
 
-    This is a parent document, \<#\<Content Select="./Name"/>#>.�
-    \<#\<Insert Id="Insert1"/>#>�
-    \<#\<Insert Id="Insert2"/>#>�
-    This is the parent document again, \<#\<Content Select="./Name"/>#>.�
+```md
+This is a parent document, <# <Content Select="./Name"/> #>.¶
+<# <Insert Id="Insert1"/> #>¶
+<# <Insert Id="Insert2"/> #>¶
+This is the parent document again, <# <Content Select="./Name"/> #>.¶
+```
 
 #### Template notes:
-  * A "Direct" composition source means the Insert's "Id" attribute is used to look up the appropriate
+  * A "Direct" composition source means the Insert's `Id` attribute is used to look up the appropriate
     insert source from among those passed into ComposeDocument.
   * In this case, the specific type of source object passed into ComposeDocument is used to determine
     whether that source is static (`DocxSource`) or dynamic (`TemplateSource`).
@@ -156,8 +160,8 @@ source IDs your template refers to, so you can provide the necessary sources wit
 
 Insertion w/ "Indirect" Sources
 -------------------------------------------
-In this mode of operation, the "parent" DOCX might not contain \<Insert> elements at all, but rather,
-it contains regular \<Content> elements (which must be at block level). These \<Content> elements
+In this mode of operation, the "parent" DOCX might not contain `<Insert>` elements at all, but rather,
+it contains regular `<Content>` elements (which must be at block level). These `<Content>` elements
 cause a lookup in the XML data, and that data then contains the actual Insert Id used to identify
 a composition source.
 
@@ -184,19 +188,21 @@ a composition source.
 
 In ParentTemplate.docx:
 
-    This is a parent document, \<#\<Content Select="./Name"/>#>.�
-    \<#\<Content Select="./Indirect1"/>#>�
-    \<#\<Content Select="./Indirect2"/>#>�
-    This is the parent document again, \<#\<Content Select="./Name"/>#>.�
+```md
+This is a parent document, <# <Content Select="./Name"/> #>.¶
+<# <Content Select="./Indirect1"/> #>¶
+<# <Content Select="./Indirect2"/> #>¶
+This is the parent document again, <# <Content Select="./Name"/> #>.¶
+```
 
 ### Sample data showing "indirect" sources
 ```xml
-    <?xml version="1.0" encoding="utf-8"?>
-    <Customer>
-      <Name>Cheryl</Name>
-      <Indirect1>oxpt://DocumentAssembler/insert/Insert1</Indirect1>
-      <Indirect2>oxpt://DocumentAssembler/insert/Insert2</Indirect2>
-    </Customer>
+<?xml version="1.0" encoding="utf-8"?>
+<Customer>
+  <Name>Cheryl</Name>
+  <Indirect1>oxpt://DocumentAssembler/insert/Insert1</Indirect1>
+  <Indirect2>oxpt://DocumentAssembler/insert/Insert2</Indirect2>
+</Customer>
 ```
 
 Concatenation (Direct Sources)
@@ -207,8 +213,12 @@ in addition to static DOCX sources, dynamic sources (created by process of docum
 
 Future
 ======
-Also planning to incorporate support for **image insertion** into DocumentAssembler, both for static and
-potentially dynamically-generated images.
+  * planning to integrate support for **image insertion** into DocumentComposer, allowing for both static and
+    potentially dynamically-generated images to be incorporated into assembled documents efficiently (i.e. without
+    base64-encoding the image data and embedding them into the XML).
+  
+  * also researching feasibility of having DocumentAssembler (optionally) translate markdown tags in incoming XML
+    data into native DOCX formatting codes when inserting content into templates.
 
 
 Sponsorship
