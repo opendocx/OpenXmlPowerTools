@@ -1,16 +1,27 @@
 Focus of This Fork
 ==================================
 
-This fork of [Open-Xml-PowerTools](https://github.com/OpenXmlDev/Open-Xml-PowerTools) aims to
+This fork of [OpenXmlPowerTools](https://github.com/Codeuctivity/OpenXmlPowerTools) (formerly
+[Open-Xml-PowerTools](https://github.com/OpenXmlDev/Open-Xml-PowerTools)) aims to
 
   * add DocumentComposer functionality (see below)
   * fix bugs that may not (yet) have been fixed upstream
-  * target .NET 8.0 (stable) and 10.0 (preview) for cross-platform usage
+  * restore original project namespace
   * otherwise track the upstream fork closely, supporting the same usage patterns and practices
  
-The project was originally forked from OpenXmlDev's repository, but recently migrated to be
-based on [Codeuctivity's fork](https://github.com/Codeuctivity/OpenXmlPowerTools) instead
-because it is much more actively maintained.
+The project was originally forked from [OpenXmlDev's repository](https://github.com/OpenXmlDev/Open-Xml-PowerTools),
+but recently migrated to be based on [Codeuctivity's fork](https://github.com/Codeuctivity/OpenXmlPowerTools)
+instead because it is much more actively maintained.
+
+#### Note about this repository:
+
+The `main` branch in this fork is currently maintained using a rebasing workflow. It is
+regularly rebased onto `codeuctivity/main`, which means the commit history is rewritten and
+force‑pushes occur. (This may change in the future as opinions evolve on the matter.)
+
+If you fork this repository, be aware that branches based on `main` may need to be rebased
+rather than merged when syncing with updates. If you prefer a stable, non‑rebasing history,
+you may want to fork the upstream project instead.
 
 Terminology (quick)
 ===================
