@@ -181,8 +181,8 @@ namespace OpenXmlPowerTools
                                 }
                                 blockList.Add(elem);
                             }
-                            else
-                            { // non-insert content
+                            else if (ContentMeritsPromotion(elem))
+                            { // non-insert content, ignoring synthetic empty runs
                                 if (newPara == null)
                                 {
                                     newPara = new XElement(W.p, paraAttribs, paraProps);
@@ -217,6 +217,32 @@ namespace OpenXmlPowerTools
                 var error = CreateContextErrorMessage(element, "Error: EndConditional without matching Conditional", te);
                 element.ReplaceWith(error);
             }
+        }
+
+        private static bool ContentMeritsPromotion(XElement content)
+        {
+            if (content.Name != W.r)
+            {
+                return true;
+            }
+            foreach (var child in content.Elements())
+            {
+                if (child.Name == W.rPr)
+                {
+                    continue;
+                }
+                if (child.Name == W.t)
+                {
+                    if (!string.IsNullOrEmpty(child.Value))
+                    {
+                        return true;
+                    }
+                    continue;
+                }
+                // Preserve any run containing semantic/visible elements (tab, break, field chars, refs, drawings, etc.).
+                return true;
+            }
+            return false;
         }
 
         private static XElement RemoveGoBackBookmarks(XElement xElement)
