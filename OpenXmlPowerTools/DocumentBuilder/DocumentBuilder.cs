@@ -249,6 +249,7 @@ namespace OpenXmlPowerTools.DocumentBuilder
                                         .Elements()
                                         .Skip(source.Start)
                                         .Take(source.Count)
+                                        .Select(e => new XElement(e))
                                         .ToList();
 
                                     try
@@ -438,6 +439,7 @@ namespace OpenXmlPowerTools.DocumentBuilder
                                         .Elements()
                                         .Skip(source.Start)
                                         .Take(source.Count)
+                                        .Select(e => new XElement(e))
                                         .ToList();
 
                                     try
@@ -3420,10 +3422,10 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml
                         }).RelationshipId;
                         return;
                     }
-                    var g = new Guid();
+                    var g = Guid.NewGuid();
                     var newId = $"R{g:N}".Substring(0, 16);
                     newContentPart.CreateRelationshipToPart(temp.ImagePart, newId);
-                    imageReference.Attribute(R.id).Value = newId;
+                    imageReference.Attribute(attributeName).Value = newId;
                 }
             }
             else
@@ -3432,9 +3434,11 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml
                 if (er != null)
                 {
                     var newEr = newContentPart.AddExternalRelationship(er.RelationshipType, er.Uri);
-                    imageReference.Attribute(R.id).Value = newEr.Id;
+                    imageReference.Attribute(attributeName).Value = newEr.Id;
+                    return;
                 }
-                throw new DocumentBuilderInternalException("Source {0} is unsupported document - contains reference to NULL image");
+                throw new DocumentBuilderInternalException(
+                    $"Unsupported document: image relationship '{relId}' was not found in part '{oldContentPart.Uri}'.");
             }
         }
 
@@ -3812,7 +3816,7 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml
                         var oldPart = (EmbeddedObjectPart)ipp1.OpenXmlPart;
                         var relType = oldRelatedPart.RelationshipType;
                         var conType = oldRelatedPart.ContentType;
-                        var g = new Guid();
+                        var g = Guid.NewGuid();
                         var id = $"R{g:N}".Substring(0, 8);
                         var newPart = newChart.AddExtendedPart(relType, conType, ".bin", id);
                         using (var oldObject = oldPart.GetStream(FileMode.Open, FileAccess.Read))
