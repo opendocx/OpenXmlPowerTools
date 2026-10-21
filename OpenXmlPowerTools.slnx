@@ -35,10 +35,6 @@
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
-    <File Path=".github/dependabot.yml" />
-    <File Path=".github/workflows/cla.yml" />
-    <File Path=".github/workflows/dotnet.yml" />
-    <File Path=".github/workflows/stale.yml" />
     <File Path="LICENSE.md" />
     <File Path="README.md" />
   </Folder>

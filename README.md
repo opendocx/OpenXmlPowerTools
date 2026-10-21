@@ -54,4 +54,6 @@ The project now uses SkiaSharp to handle these responsibilities. SkiaSharp, dist
 
 ## Development
 
-- Run `dotnet build OpenXmlPowerTools.sln`
+- Install the .NET 10 SDK.
+- Run `dotnet build OpenXmlPowerTools.slnx`.
+- Run `dotnet test --project OpenXmlPowerTools.Tests/OpenXmlPowerTools.Tests.csproj`.

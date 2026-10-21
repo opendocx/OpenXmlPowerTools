@@ -15,6 +15,8 @@ using Xunit;
 
 namespace OpenXmlPowerTools.Tests
 {
+    using DocumentBuilder = global::OpenXmlPowerTools.DocumentBuilder.DocumentBuilder;
+
     public class DaTests
     {
         [Theory]

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Xunit;
 
-namespace OxPt
+namespace OpenXmlPowerTools.Tests
 {
     public class DcTests
     {
@@ -120,7 +120,7 @@ namespace OxPt
         }
 
         [Fact]
-        public async void DC001_DocumentComposerConcat()
+        public async Task DC001_DocumentComposerConcat()
         {
             var sourceArray = new TestSource[]
             {
@@ -141,7 +141,7 @@ namespace OxPt
         }
 
         [Fact]
-        public async void DC002_DocumentComposerInsertStatic()
+        public async Task DC002_DocumentComposerInsertStatic()
         {
             string template = "DC-MainSimpleInsId.docx"; // has direct insert with Id="1"
             string data = "DC-CustomerCheryl.xml";
@@ -158,7 +158,7 @@ namespace OxPt
         }
 
         [Fact]
-        public async void DC003_DocumentComposerInsertAuto()
+        public async Task DC003_DocumentComposerInsertAuto()
         {
             string template = "DC-MainSimpleInsAuto.docx"; // has implicit insert of DC-SimpleBulletRed.docx
             string data = "DC-CustomerCheryl.xml";
@@ -166,7 +166,7 @@ namespace OxPt
         }
 
         [Fact]
-        public async void DC004_DocumentComposerInsertAutoStatic()
+        public async Task DC004_DocumentComposerInsertAutoStatic()
         {
             string template = "DC-Main2SectInsAuto.docx"; // has implicit insert of DC-StaticInsertedWideMargin.docx
             string data = null;
@@ -174,7 +174,7 @@ namespace OxPt
         }
 
         [Fact]
-        public async void DC005_DocumentComposerInsertKeepSectNoBreaks()
+        public async Task DC005_DocumentComposerInsertKeepSectNoBreaks()
         {
             string template = "DC-Main1SectInsId.docx"; // has direct insert with Id="1"
             string data = null;
@@ -195,7 +195,7 @@ namespace OxPt
         }
 
         [Fact]
-        public async void DC006_DocumentComposerInsertKeepSectWithBreakBefore()
+        public async Task DC006_DocumentComposerInsertKeepSectWithBreakBefore()
         {
             string template = "DC-Main2SectInsId.docx"; // has direct insert with Id="1"
             string data = null;
@@ -216,7 +216,7 @@ namespace OxPt
         }
 
         [Fact]
-        public async void DC008_DocumentComposerInsertKeepSectWithBreaksBeforeAndAfter()
+        public async Task DC008_DocumentComposerInsertKeepSectWithBreaksBeforeAndAfter()
         {
             string template = "DC-Main2SectInsId.docx"; // has direct insert with Id="1"
             string data = null;
@@ -238,7 +238,7 @@ namespace OxPt
         }
 
         [Fact]
-        public async void DC009_DocumentComposerInsertKeepSectWithoutConditionalBreakAfter()
+        public async Task DC009_DocumentComposerInsertKeepSectWithoutConditionalBreakAfter()
         {
             string template = "DC-Main2SectInsId.docx"; // has direct insert with Id="1"
             string data = null;
@@ -260,7 +260,7 @@ namespace OxPt
         }
 
         [Fact]
-        public async void DC010_DocumentComposerInsertIndirect()
+        public async Task DC010_DocumentComposerInsertIndirect()
         {
             string template = "DC-MainInsertIndirect.docx"; // has no insert, but has Content control selecting data "./Indirect"
             string data = "DC-CustomerJuliaIndirect.xml"; // has data point 'Indirect' => "oxpt://DocumentAssembler/insert/1"
